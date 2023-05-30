@@ -4,13 +4,22 @@ export default function Data() {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        const fetchData = async () => {
-            const response = await fetch(`http://127.0.0.1:8089/api/v1/categories/`)
-            const newData = await response.json()
-            setData(newData)
-        }
+        // const fetchData = async () => {
+        //     const response = await fetch(`http://127.0.0.1:8089/api/v1/categories/`)
+        //     const newData = await response.json()
+        //     setData(newData)
+        // }
+        // const interval = setInterval(fetchData, 1000) // Poll every 5 seconds
 
-        const interval = setInterval(fetchData, 1000) // Poll every 5 seconds
+        const interval = setInterval(() => {
+            const fetchData = async () => {
+                const response = await fetch(`http://127.0.0.1:8089/api/v1/categories/`)
+                const newData = await response.json()
+                setData(newData)
+            }
+            fetchData()
+        }, 1000)
+
         return () => clearInterval(interval) // Cleanup on component unmount
     }, [])
 
